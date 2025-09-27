@@ -91,3 +91,6 @@ configure<MavenPublishBaseExtension> {
     )
   )
 }
+tasks.withType(PublishToMavenRepository::class.java).configureEach {
+  enabled = false
+}
