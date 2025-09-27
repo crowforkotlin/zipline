@@ -1,6 +1,9 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
   kotlin("multiplatform")
@@ -17,6 +20,7 @@ kotlin {
   androidTarget {
     publishLibraryVariants("release")
   }
+  wasmJs()
   if (false) {
     linuxX64()
   }
@@ -63,6 +67,12 @@ kotlin {
     val nativeMain by getting {
       dependencies {
         implementation(libs.sqldelight.driver.native)
+      }
+    }
+    val wasmJsMain by getting {
+      dependsOn(commonMain)
+      dependencies {
+        implementation(libs.okHttp.core)
       }
     }
 
