@@ -17,7 +17,7 @@ buildConfig {
     internalVisibility = true
   }
 
-  packageName("app.cash.zipline.cli")
+  packageName("io.github.crowforkotlin.cli")
   buildConfigField("String", "VERSION", "\"${version}\"")
 }
 

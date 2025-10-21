@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 11)
 
 file(GLOB_RECURSE sources "../../native/*.c" "../../native/*.cpp")
 
+if(DEFINED QUICKJS_VERSION)
+  add_compile_definitions(CONFIG_VERSION="${QUICKJS_VERSION}")
+endif()
+
 add_library(quickjs SHARED ${sources})
 
 target_link_libraries(quickjs)

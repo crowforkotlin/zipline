@@ -51,7 +51,7 @@ tasks.named("dokkaHtmlMultiModule", DokkaMultiModuleTask::class.java).configure 
 }
 
 allprojects {
-  group = "app.cash.zipline"
+  group = "io.github.crowforkotlin.zipline"
   version = project.property("VERSION_NAME") as String
 
   repositories {
@@ -216,9 +216,9 @@ allprojects {
       publishToMavenCentral(automaticRelease = true)
       signAllPublications()
       pom {
-        description.set("Runs Kotlin/JS libraries in Kotlin/JVM and Kotlin/Native programs")
-        name.set(project.name)
-        url.set("https://github.com/cashapp/zipline/")
+        description.set("Windows support extension of Zipline (crowforkotlin).")
+        name.set("Zipline Windows Support (crowforkotlin)")
+        url.set("https://github.com/crowforkotlin/zipline/")
         licenses {
           license {
             name.set("The Apache Software License, Version 2.0")
@@ -228,14 +228,15 @@ allprojects {
         }
         developers {
           developer {
-            id.set("cashapp")
-            name.set("Cash App")
+            id.set("crowforkotlin")
+            name.set("wuya")
+            email.set("crowforkotlin@gmail.com")
           }
         }
         scm {
-          url.set("https://github.com/cashapp/zipline/")
-          connection.set("scm:git:https://github.com/cashapp/zipline.git")
-          developerConnection.set("scm:git:ssh://git@github.com/cashapp/zipline.git")
+          url.set("https://github.com/crowforkotlin/zipline/")
+          connection.set("scm:git:https://github.com/crowforkotlin/zipline.git")
+          developerConnection.set("scm:git:ssh://git@github.com:crowforkotlin/zipline.git")
         }
       }
     }
@@ -263,3 +264,27 @@ allprojects {
     }
   }
 }
+
+tasks.register("printPublications") {
+  doLast {
+    allprojects.forEach { proj ->
+      proj.extensions.findByName("publishing")?.let { pubExt ->
+        // 反射安全获取 publications
+        val publishing = proj.extensions.getByName("publishing")
+        val publications = proj.the<org.gradle.api.publish.PublishingExtension>().publications
+        publications.forEach { p ->
+          val m = p as? org.gradle.api.publish.maven.MavenPublication
+          if (m != null) {
+            println("${proj.path} -> publication='${p.name}'  group=${m.groupId}  artifact=${m.artifactId}  version=${m.version}")
+          } else {
+            println("${proj.path} -> publication='${p.name}' (non-maven publication)")
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
+./gradlew publishToMavenCentral -PsigningInMemoryKey="$(cat ~/.gradle/gpg/crowforkotlin.key.asc)" -PsigningInMemoryPassword=""
+*/

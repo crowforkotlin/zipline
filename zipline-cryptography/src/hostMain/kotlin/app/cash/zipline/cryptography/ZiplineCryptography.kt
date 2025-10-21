@@ -17,8 +17,8 @@ package app.cash.zipline.cryptography
 
 import app.cash.zipline.Zipline
 
-expect fun Zipline.installCryptographyService()
+expect fun app.cash.zipline.Zipline.installCryptographyService()
 
-internal fun Zipline.installCryptographyServiceInternal(ziplineCryptographyService: ZiplineCryptographyService) {
+internal fun app.cash.zipline.Zipline.installCryptographyServiceInternal(ziplineCryptographyService: ZiplineCryptographyService) {
   bind("zipline/cryptography", ziplineCryptographyService)
 }

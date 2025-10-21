@@ -23,6 +23,7 @@ import com.github.ajalt.clikt.core.NoOpCliktCommand
 import com.github.ajalt.clikt.core.main
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.versionOption
+import io.github.crowforkotlin.cli.BuildConfig
 
 fun main(vararg args: String) {
   if (System.getProperty("javax.net.debug") == null) {
