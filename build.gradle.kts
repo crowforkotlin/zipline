@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.konan.target.HostManager
 
 buildscript {
   repositories {
@@ -261,6 +262,22 @@ allprojects {
       ignoredPackages += "app.cash.zipline.loader.internal.cache"
       // Making this properly internal requires adopting test facets.
       ignoredPackages += "app.cash.zipline.loader.internal.fetcher"
+    }
+  }
+
+  if (!HostManager.hostIsMac) {
+    tasks.configureEach {
+      // 根據任務名稱來判斷是否為 Apple 平台的任務
+      val taskName = name.lowercase()
+      if (
+        taskName.contains("ios") ||
+        taskName.contains("macos") ||
+        taskName.contains("watchos") ||
+        taskName.contains("tvos")
+      ) {
+        // 找到符合條件的任務，將其 enabled 屬性設為 false
+        enabled = false
+      }
     }
   }
 }
