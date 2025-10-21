@@ -10,7 +10,7 @@ buildscript {
     classpath(libs.kotlin.serialization)
     classpath(libs.shadowJar.gradle.plugin)
     classpath(libs.cklib.gradle.plugin)
-    classpath("app.cash.zipline:zipline-gradle-plugin")
+    classpath("io.github.crowforkotlin.zipline:zipline-gradle-plugin")
   }
   repositories {
     mavenCentral()

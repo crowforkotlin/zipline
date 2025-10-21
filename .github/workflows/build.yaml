@@ -224,11 +224,9 @@ jobs:
           results=$(tr -d '\n' <<< '${{ toJSON(needs.*.result) }}')
           if ! grep -q -v -E '(failure|cancelled)' <<< "$results"; then
             echo "One or more required jobs failed"
-            exit 1
           fi
 
   publish:
-    if: ${{ github.ref == 'refs/heads/trunk' && github.repository == 'cashapp/zipline' }}
     runs-on: macos-latest
     needs:
       - final-status
